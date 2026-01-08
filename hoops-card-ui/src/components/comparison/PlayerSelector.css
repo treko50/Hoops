@@ -1,0 +1,201 @@
+/**
+ * PlayerSelector Component Styles
+ */
+
+.player-selector {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  width: 100%;
+}
+
+.selector-filters {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-3);
+  width: 100%;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--glass-bg-dark);
+  padding-bottom: var(--space-3);
+}
+
+.selector-search {
+  position: sticky;
+  top: 60px;
+  z-index: 10;
+  background: var(--glass-bg-dark);
+  padding-bottom: var(--space-3);
+}
+
+.selector-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: var(--space-3);
+  overflow-y: auto;
+  max-height: 500px;
+  padding: var(--space-2);
+}
+
+/* Simplified Card */
+.selector-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--space-4);
+  min-height: 140px;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  position: relative;
+}
+
+.selector-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--color-primary);
+  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.4);
+}
+
+.selector-card-rating {
+  font-size: var(--text-3xl);
+  font-weight: var(--font-black);
+  background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: var(--space-2);
+}
+
+.selector-card-name {
+  font-size: var(--text-sm);
+  font-weight: var(--font-bold);
+  color: var(--color-white);
+  margin-bottom: var(--space-1);
+  line-height: 1.3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.selector-card-details {
+  font-size: var(--text-xs);
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: var(--space-2);
+}
+
+.selector-card-rarity {
+  font-size: var(--text-xs);
+  font-weight: var(--font-bold);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-full);
+  background: var(--glass-bg-light);
+  border: 1px solid var(--glass-border);
+  color: rgba(255, 255, 255, 0.8);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+}
+
+/* Rarity colors */
+.selector-card-rarity.legendary {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.3), rgba(118, 75, 162, 0.3));
+  border-color: rgba(118, 75, 162, 0.6);
+  color: #c4b5fd;
+}
+
+.selector-card-rarity.gold_rare {
+  background: linear-gradient(135deg, rgba(240, 147, 251, 0.3), rgba(245, 87, 108, 0.3));
+  border-color: rgba(245, 87, 108, 0.6);
+  color: #fbbf24;
+}
+
+.selector-card-rarity.gold {
+  background: linear-gradient(135deg, rgba(250, 208, 196, 0.3), rgba(255, 209, 255, 0.3));
+  border-color: rgba(255, 215, 0, 0.6);
+  color: #fde047;
+}
+
+.selector-card-rarity.silver_rare {
+  background: linear-gradient(135deg, rgba(168, 237, 234, 0.3), rgba(254, 214, 227, 0.3));
+  border-color: rgba(229, 229, 229, 0.6);
+  color: #e5e7eb;
+}
+
+.selector-card-rarity.silver {
+  background: linear-gradient(135deg, rgba(210, 153, 194, 0.3), rgba(254, 249, 215, 0.3));
+  border-color: rgba(192, 192, 192, 0.6);
+  color: #d1d5db;
+}
+
+.selector-card-rarity.bronze {
+  background: linear-gradient(135deg, rgba(212, 165, 116, 0.3), rgba(245, 222, 179, 0.3));
+  border-color: rgba(205, 127, 50, 0.6);
+  color: #f5deb3;
+}
+
+.selector-loading {
+  text-align: center;
+  padding: var(--space-12);
+  color: rgba(255, 255, 255, 0.7);
+  font-size: var(--text-base);
+}
+
+.selector-empty {
+  text-align: center;
+  padding: var(--space-12);
+  color: rgba(255, 255, 255, 0.6);
+  font-size: var(--text-base);
+}
+
+/* Custom scrollbar */
+.selector-grid::-webkit-scrollbar {
+  width: 8px;
+}
+
+.selector-grid::-webkit-scrollbar-track {
+  background: var(--glass-bg);
+  border-radius: var(--radius-full);
+}
+
+.selector-grid::-webkit-scrollbar-thumb {
+  background: var(--glass-border);
+  border-radius: var(--radius-full);
+}
+
+.selector-grid::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .selector-filters {
+    grid-template-columns: 1fr;
+    gap: var(--space-2);
+  }
+
+  .selector-search {
+    top: 200px;
+  }
+
+  .selector-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: var(--space-2);
+    max-height: 400px;
+  }
+
+  .selector-card {
+    min-height: 120px;
+    padding: var(--space-3);
+  }
+
+  .selector-card-rating {
+    font-size: var(--text-2xl);
+  }
+
+  .selector-card-name {
+    font-size: var(--text-xs);
+  }
+}

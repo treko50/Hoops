@@ -1,0 +1,188 @@
+/* Demo Application Styles */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  color: white;
+  min-height: 100vh;
+}
+
+.app {
+  min-height: 100vh;
+  padding-bottom: 40px;
+}
+
+.app-header {
+  text-align: center;
+  padding: 40px 20px 20px;
+  background: rgba(0, 0, 0, 0.3);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.app-header h1 {
+  font-size: 48px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.subtitle {
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 300;
+}
+
+.loading {
+  text-align: center;
+  padding: 100px 20px;
+  font-size: 24px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Controls */
+.controls {
+  max-width: 1400px;
+  margin: 30px auto 20px;
+  padding: 0 20px;
+}
+
+.search-box {
+  margin-bottom: 20px;
+}
+
+.search-input {
+  width: 100%;
+  max-width: 500px;
+  padding: 15px 20px;
+  font-size: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.3);
+  color: white;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.search-input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.search-input:focus {
+  border-color: #FFD700;
+}
+
+.filter-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.filter-btn {
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.3);
+  color: rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.filter-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.filter-btn.active {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: white;
+  color: white;
+}
+
+.filter-btn.legendary {
+  border-color: rgba(156, 39, 176, 0.5);
+  color: rgba(233, 30, 99, 0.9);
+}
+
+.filter-btn.legendary.active {
+  background: rgba(156, 39, 176, 0.3);
+  border-color: #9C27B0;
+  color: #E91E63;
+}
+
+.filter-btn.gold {
+  border-color: rgba(255, 215, 0, 0.3);
+  color: rgba(255, 215, 0, 0.9);
+}
+
+.filter-btn.gold.active {
+  background: rgba(255, 215, 0, 0.2);
+  border-color: #FFD700;
+  color: #FFD700;
+}
+
+.filter-btn.silver {
+  border-color: rgba(192, 192, 192, 0.3);
+  color: rgba(232, 232, 232, 0.9);
+}
+
+.filter-btn.silver.active {
+  background: rgba(192, 192, 192, 0.2);
+  border-color: #C0C0C0;
+  color: #E8E8E8;
+}
+
+.filter-btn.bronze {
+  border-color: rgba(205, 127, 50, 0.3);
+  color: rgba(205, 127, 50, 0.9);
+}
+
+.filter-btn.bronze.active {
+  background: rgba(205, 127, 50, 0.2);
+  border-color: #CD7F32;
+  color: #CD7F32;
+}
+
+.results-info {
+  max-width: 1400px;
+  margin: 0 auto 20px;
+  padding: 0 20px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.5);
+  text-align: center;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .app-header h1 {
+    font-size: 32px;
+  }
+
+  .subtitle {
+    font-size: 14px;
+  }
+
+  .filter-buttons {
+    justify-content: center;
+  }
+
+  .filter-btn {
+    padding: 8px 16px;
+    font-size: 12px;
+  }
+}

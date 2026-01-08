@@ -1,0 +1,382 @@
+/**
+ * Design System - Glassmorphism Theme
+ * Foundation CSS variables and design tokens for the NBA Card Platform
+ * Inspired by FIFA 23/24 glassmorphism aesthetics
+ */
+
+:root {
+  /* ========================================
+     COLOR PALETTE
+     ======================================== */
+
+  /* Primary Colors - Indigo/Blue */
+  --color-primary: #6366f1;
+  --color-primary-light: #818cf8;
+  --color-primary-dark: #4f46e5;
+  --color-primary-rgb: 99, 102, 241;
+
+  /* Secondary Colors - Amber/Gold */
+  --color-secondary: #f59e0b;
+  --color-secondary-light: #fbbf24;
+  --color-secondary-dark: #d97706;
+  --color-secondary-rgb: 245, 158, 11;
+
+  /* Accent Colors - Pink */
+  --color-accent: #ec4899;
+  --color-accent-light: #f472b6;
+  --color-accent-dark: #db2777;
+  --color-accent-rgb: 236, 72, 153;
+
+  /* Semantic Colors */
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-danger: #ef4444;
+  --color-info: #3b82f6;
+
+  /* Neutral Colors */
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-gray-50: #f9fafb;
+  --color-gray-100: #f3f4f6;
+  --color-gray-200: #e5e7eb;
+  --color-gray-300: #d1d5db;
+  --color-gray-400: #9ca3af;
+  --color-gray-500: #6b7280;
+  --color-gray-600: #4b5563;
+  --color-gray-700: #374151;
+  --color-gray-800: #1f2937;
+  --color-gray-900: #111827;
+
+  /* Background Gradients */
+  --bg-gradient-1: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+  --bg-gradient-2: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  --bg-gradient-3: linear-gradient(135deg, #141e30 0%, #243b55 100%);
+
+  /* Card Rarity Gradients (Glassmorphism Enhanced) */
+  --rarity-legendary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --rarity-gold-rare: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  --rarity-gold: linear-gradient(135deg, #fad0c4 0%, #ffd1ff 100%);
+  --rarity-silver-rare: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+  --rarity-silver: linear-gradient(135deg, #d299c2 0%, #fef9d7 100%);
+  --rarity-bronze: linear-gradient(135deg, #d4a574 0%, #f5deb3 100%);
+
+  /* ========================================
+     GLASSMORPHISM
+     ======================================== */
+
+  /* Glass Background Colors */
+  --glass-bg: rgba(255, 255, 255, 0.1);
+  --glass-bg-light: rgba(255, 255, 255, 0.15);
+  --glass-bg-lighter: rgba(255, 255, 255, 0.2);
+  --glass-bg-dark: rgba(0, 0, 0, 0.2);
+  --glass-bg-darker: rgba(0, 0, 0, 0.3);
+
+  /* Glass Borders */
+  --glass-border: rgba(255, 255, 255, 0.18);
+  --glass-border-light: rgba(255, 255, 255, 0.25);
+  --glass-border-strong: rgba(255, 255, 255, 0.3);
+
+  /* Blur Values */
+  --blur-xs: 4px;
+  --blur-sm: 8px;
+  --blur-md: 10px;
+  --blur-lg: 16px;
+  --blur-xl: 24px;
+  --blur-2xl: 40px;
+
+  /* Glass Shadows */
+  --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  --glass-shadow-lg: 0 12px 48px 0 rgba(31, 38, 135, 0.5);
+  --glass-shadow-inset: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  --glass-shadow-inset-strong: inset 0 2px 2px rgba(255, 255, 255, 0.15);
+
+  /* Glow Effects */
+  --glow-primary: 0 0 20px rgba(99, 102, 241, 0.3);
+  --glow-primary-strong: 0 0 40px rgba(99, 102, 241, 0.6);
+  --glow-secondary: 0 0 20px rgba(245, 158, 11, 0.3);
+  --glow-accent: 0 0 20px rgba(236, 72, 153, 0.3);
+  --glow-success: 0 0 20px rgba(16, 185, 129, 0.3);
+  --glow-danger: 0 0 20px rgba(239, 68, 68, 0.3);
+
+  /* ========================================
+     TYPOGRAPHY
+     ======================================== */
+
+  /* Font Families */
+  --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+                  'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+                  'Helvetica Neue', sans-serif;
+  --font-secondary: 'Poppins', var(--font-primary);
+  --font-mono: 'Fira Code', 'Consolas', 'Monaco', 'Courier New', monospace;
+
+  /* Font Sizes */
+  --text-xs: 0.75rem;      /* 12px */
+  --text-sm: 0.875rem;     /* 14px */
+  --text-base: 1rem;       /* 16px */
+  --text-lg: 1.125rem;     /* 18px */
+  --text-xl: 1.25rem;      /* 20px */
+  --text-2xl: 1.5rem;      /* 24px */
+  --text-3xl: 1.875rem;    /* 30px */
+  --text-4xl: 2.25rem;     /* 36px */
+  --text-5xl: 3rem;        /* 48px */
+  --text-6xl: 3.75rem;     /* 60px */
+  --text-7xl: 4.5rem;      /* 72px */
+
+  /* Font Weights */
+  --font-light: 300;
+  --font-normal: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+  --font-extrabold: 800;
+  --font-black: 900;
+
+  /* Line Heights */
+  --leading-none: 1;
+  --leading-tight: 1.25;
+  --leading-snug: 1.375;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.625;
+  --leading-loose: 2;
+
+  /* Letter Spacing */
+  --tracking-tighter: -0.05em;
+  --tracking-tight: -0.025em;
+  --tracking-normal: 0em;
+  --tracking-wide: 0.025em;
+  --tracking-wider: 0.05em;
+  --tracking-widest: 0.1em;
+
+  /* ========================================
+     SPACING
+     ======================================== */
+
+  /* Base: 4px scale */
+  --space-0: 0;
+  --space-1: 0.25rem;   /* 4px */
+  --space-2: 0.5rem;    /* 8px */
+  --space-3: 0.75rem;   /* 12px */
+  --space-4: 1rem;      /* 16px */
+  --space-5: 1.25rem;   /* 20px */
+  --space-6: 1.5rem;    /* 24px */
+  --space-7: 1.75rem;   /* 28px */
+  --space-8: 2rem;      /* 32px */
+  --space-10: 2.5rem;   /* 40px */
+  --space-12: 3rem;     /* 48px */
+  --space-16: 4rem;     /* 64px */
+  --space-20: 5rem;     /* 80px */
+  --space-24: 6rem;     /* 96px */
+  --space-32: 8rem;     /* 128px */
+  --space-40: 10rem;    /* 160px */
+  --space-48: 12rem;    /* 192px */
+  --space-56: 14rem;    /* 224px */
+  --space-64: 16rem;    /* 256px */
+
+  /* ========================================
+     BORDER RADIUS
+     ======================================== */
+
+  --radius-none: 0;
+  --radius-sm: 0.25rem;    /* 4px */
+  --radius-base: 0.375rem; /* 6px */
+  --radius-md: 0.5rem;     /* 8px */
+  --radius-lg: 0.75rem;    /* 12px */
+  --radius-xl: 1rem;       /* 16px */
+  --radius-2xl: 1.5rem;    /* 24px */
+  --radius-3xl: 2rem;      /* 32px */
+  --radius-full: 9999px;
+
+  /* ========================================
+     Z-INDEX LAYERS
+     ======================================== */
+
+  --z-base: 0;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-fixed: 300;
+  --z-modal-backdrop: 400;
+  --z-modal: 500;
+  --z-popover: 600;
+  --z-tooltip: 700;
+  --z-notification: 800;
+  --z-max: 999;
+
+  /* ========================================
+     TRANSITIONS & ANIMATIONS
+     ======================================== */
+
+  /* Timing Functions */
+  --ease-linear: linear;
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+  /* Duration */
+  --duration-75: 75ms;
+  --duration-100: 100ms;
+  --duration-150: 150ms;
+  --duration-200: 200ms;
+  --duration-250: 250ms;
+  --duration-300: 300ms;
+  --duration-400: 400ms;
+  --duration-500: 500ms;
+  --duration-700: 700ms;
+  --duration-1000: 1000ms;
+
+  /* Standard Transitions */
+  --transition-fast: var(--duration-150) var(--ease-in-out);
+  --transition-base: var(--duration-250) var(--ease-in-out);
+  --transition-slow: var(--duration-400) var(--ease-in-out);
+  --transition-all: all var(--transition-base);
+
+  /* ========================================
+     BREAKPOINTS (for reference in JS)
+     ======================================== */
+
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1536px;
+
+  /* ========================================
+     COMPONENT-SPECIFIC
+     ======================================== */
+
+  /* Card Dimensions */
+  --card-width: 300px;
+  --card-height: 420px;
+  --card-gap: 30px;
+
+  /* Player Card Rating Badge */
+  --rating-size: 80px;
+
+  /* Navigation */
+  --nav-height: 70px;
+
+  /* Sidebar */
+  --sidebar-width: 300px;
+}
+
+/* ========================================
+   UTILITY CLASSES
+   ======================================== */
+
+/* Glass Base Class */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--blur-md)) saturate(180%);
+  -webkit-backdrop-filter: blur(var(--blur-md)) saturate(180%);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow), var(--glass-shadow-inset);
+}
+
+.glass-light {
+  background: var(--glass-bg-light);
+  border-color: var(--glass-border-light);
+}
+
+.glass-lighter {
+  background: var(--glass-bg-lighter);
+  border-color: var(--glass-border-strong);
+}
+
+.glass-dark {
+  background: var(--glass-bg-dark);
+}
+
+.glass-elevated {
+  background: var(--glass-bg-light);
+  backdrop-filter: blur(var(--blur-lg)) saturate(200%);
+  -webkit-backdrop-filter: blur(var(--blur-lg)) saturate(200%);
+  border: 1.5px solid var(--glass-border-light);
+  box-shadow: var(--glass-shadow-lg), var(--glass-shadow-inset-strong);
+}
+
+/* Interactive Glass (Hover State) */
+.glass-interactive {
+  transition: all var(--transition-base);
+  cursor: pointer;
+}
+
+.glass-interactive:hover {
+  background: var(--glass-bg-light);
+  border-color: var(--glass-border-strong);
+  box-shadow: var(--glass-shadow-lg), var(--glow-primary);
+  transform: translateY(-2px);
+}
+
+.glass-interactive:active {
+  transform: translateY(0);
+}
+
+/* Glow Effects */
+.glow-primary {
+  box-shadow: var(--glow-primary);
+}
+
+.glow-primary-strong {
+  box-shadow: var(--glow-primary-strong);
+}
+
+.glow-secondary {
+  box-shadow: var(--glow-secondary);
+}
+
+.glow-accent {
+  box-shadow: var(--glow-accent);
+}
+
+/* Text Gradients */
+.text-gradient-primary {
+  background: linear-gradient(135deg, var(--color-primary-light), var(--color-accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-gold {
+  background: linear-gradient(135deg, var(--color-secondary), #ffd700);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Browser Fallbacks */
+@supports not (backdrop-filter: blur(10px)) {
+  .glass,
+  .glass-light,
+  .glass-lighter,
+  .glass-elevated {
+    background: rgba(0, 0, 0, 0.7);
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+  :root {
+    /* Reduce blur on mobile for better performance */
+    --blur-sm: 6px;
+    --blur-md: 8px;
+    --blur-lg: 12px;
+    --blur-xl: 16px;
+
+    /* Adjust card dimensions */
+    --card-width: 250px;
+    --card-height: 350px;
+    --card-gap: 20px;
+
+    /* Adjust navigation height */
+    --nav-height: 60px;
+  }
+}

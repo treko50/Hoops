@@ -1,0 +1,163 @@
+/**
+ * Badge Component Styles
+ */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: var(--font-semibold);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  border-radius: var(--radius-full);
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--blur-sm)) saturate(180%);
+  -webkit-backdrop-filter: blur(var(--blur-sm)) saturate(180%);
+  border: 1px solid var(--glass-border);
+  white-space: nowrap;
+  transition: all var(--transition-fast);
+}
+
+/* ========================================
+   SIZES
+   ======================================== */
+
+.badge--sm {
+  font-size: var(--text-xs);
+  padding: var(--space-1) var(--space-2);
+}
+
+.badge--md {
+  font-size: var(--text-sm);
+  padding: var(--space-1) var(--space-3);
+}
+
+.badge--lg {
+  font-size: var(--text-base);
+  padding: var(--space-2) var(--space-4);
+}
+
+/* ========================================
+   VARIANTS
+   ======================================== */
+
+/* Default */
+.badge--default {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Primary */
+.badge--primary {
+  background: rgba(99, 102, 241, 0.2);
+  border-color: rgba(99, 102, 241, 0.4);
+  color: var(--color-primary-light);
+}
+
+/* Secondary */
+.badge--secondary {
+  background: rgba(245, 158, 11, 0.2);
+  border-color: rgba(245, 158, 11, 0.4);
+  color: var(--color-secondary-light);
+}
+
+/* Success */
+.badge--success {
+  background: rgba(16, 185, 129, 0.2);
+  border-color: rgba(16, 185, 129, 0.4);
+  color: var(--color-success);
+}
+
+/* Danger */
+.badge--danger {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: rgba(239, 68, 68, 0.4);
+  color: var(--color-danger);
+}
+
+/* Warning */
+.badge--warning {
+  background: rgba(245, 158, 11, 0.2);
+  border-color: rgba(245, 158, 11, 0.4);
+  color: var(--color-warning);
+}
+
+/* Info */
+.badge--info {
+  background: rgba(59, 130, 246, 0.2);
+  border-color: rgba(59, 130, 246, 0.4);
+  color: var(--color-info);
+}
+
+/* ========================================
+   RARITY VARIANTS
+   ======================================== */
+
+/* Legendary */
+.badge--legendary {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.3), rgba(118, 75, 162, 0.3));
+  border-color: rgba(118, 75, 162, 0.6);
+  color: #c4b5fd;
+  font-weight: var(--font-bold);
+}
+
+/* Gold Rare */
+.badge--gold-rare {
+  background: linear-gradient(135deg, rgba(240, 147, 251, 0.3), rgba(245, 87, 108, 0.3));
+  border-color: rgba(245, 87, 108, 0.6);
+  color: #fbbf24;
+  font-weight: var(--font-bold);
+}
+
+/* Gold */
+.badge--gold {
+  background: linear-gradient(135deg, rgba(250, 208, 196, 0.3), rgba(255, 209, 255, 0.3));
+  border-color: rgba(255, 215, 0, 0.6);
+  color: #fde047;
+  font-weight: var(--font-semibold);
+}
+
+/* Silver Rare */
+.badge--silver-rare {
+  background: linear-gradient(135deg, rgba(168, 237, 234, 0.3), rgba(254, 214, 227, 0.3));
+  border-color: rgba(229, 229, 229, 0.6);
+  color: #e5e7eb;
+  font-weight: var(--font-semibold);
+}
+
+/* Silver */
+.badge--silver {
+  background: linear-gradient(135deg, rgba(210, 153, 194, 0.3), rgba(254, 249, 215, 0.3));
+  border-color: rgba(192, 192, 192, 0.6);
+  color: #d1d5db;
+}
+
+/* Bronze */
+.badge--bronze {
+  background: linear-gradient(135deg, rgba(212, 165, 116, 0.3), rgba(245, 222, 179, 0.3));
+  border-color: rgba(205, 127, 50, 0.6);
+  color: #f5deb3;
+}
+
+/* ========================================
+   HOVER EFFECTS
+   ======================================== */
+
+.badge--primary:hover,
+.badge--secondary:hover,
+.badge--success:hover,
+.badge--danger:hover,
+.badge--warning:hover,
+.badge--info:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* ========================================
+   BROWSER FALLBACKS
+   ======================================== */
+
+@supports not (backdrop-filter: blur(4px)) {
+  .badge {
+    background: rgba(0, 0, 0, 0.6);
+  }
+}

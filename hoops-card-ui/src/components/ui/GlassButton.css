@@ -1,0 +1,286 @@
+/**
+ * GlassButton Component Styles
+ * Glassmorphism button variants
+ */
+
+.glass-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  font-family: var(--font-primary);
+  font-weight: var(--font-semibold);
+  line-height: 1;
+  border: none;
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  overflow: hidden;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.glass-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.05);
+  transform: translateX(-100%);
+  transition: transform var(--transition-base);
+}
+
+.glass-btn:hover::before {
+  transform: translateX(0);
+}
+
+/* ========================================
+   VARIANTS
+   ======================================== */
+
+/* Primary */
+.glass-btn--primary {
+  background: var(--glass-bg-light);
+  backdrop-filter: blur(var(--blur-md)) saturate(180%);
+  -webkit-backdrop-filter: blur(var(--blur-md)) saturate(180%);
+  border: 1px solid rgba(99, 102, 241, 0.4);
+  color: var(--color-white);
+  box-shadow: 0 4px 16px rgba(99, 102, 241, 0.3), var(--glass-shadow-inset);
+}
+
+.glass-btn--primary:hover {
+  background: rgba(99, 102, 241, 0.2);
+  border-color: rgba(99, 102, 241, 0.6);
+  box-shadow: 0 6px 24px rgba(99, 102, 241, 0.5), var(--glow-primary);
+  transform: translateY(-2px);
+}
+
+.glass-btn--primary:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
+}
+
+/* Secondary */
+.glass-btn--secondary {
+  background: var(--glass-bg-light);
+  backdrop-filter: blur(var(--blur-md)) saturate(180%);
+  -webkit-backdrop-filter: blur(var(--blur-md)) saturate(180%);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  color: var(--color-white);
+  box-shadow: 0 4px 16px rgba(245, 158, 11, 0.3), var(--glass-shadow-inset);
+}
+
+.glass-btn--secondary:hover {
+  background: rgba(245, 158, 11, 0.2);
+  border-color: rgba(245, 158, 11, 0.6);
+  box-shadow: 0 6px 24px rgba(245, 158, 11, 0.5), var(--glow-secondary);
+  transform: translateY(-2px);
+}
+
+.glass-btn--secondary:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
+}
+
+/* Danger */
+.glass-btn--danger {
+  background: var(--glass-bg-light);
+  backdrop-filter: blur(var(--blur-md)) saturate(180%);
+  -webkit-backdrop-filter: blur(var(--blur-md)) saturate(180%);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  color: var(--color-white);
+  box-shadow: 0 4px 16px rgba(239, 68, 68, 0.3), var(--glass-shadow-inset);
+}
+
+.glass-btn--danger:hover {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: rgba(239, 68, 68, 0.6);
+  box-shadow: 0 6px 24px rgba(239, 68, 68, 0.5), var(--glow-danger);
+  transform: translateY(-2px);
+}
+
+.glass-btn--danger:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+}
+
+/* Ghost */
+.glass-btn--ghost {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--color-white);
+  box-shadow: none;
+}
+
+.glass-btn--ghost:hover {
+  background: var(--glass-bg);
+  border-color: var(--glass-border);
+  box-shadow: var(--glass-shadow);
+}
+
+.glass-btn--ghost:active {
+  background: var(--glass-bg-light);
+}
+
+/* Outline */
+.glass-btn--outline {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: var(--color-white);
+  box-shadow: none;
+}
+
+.glass-btn--outline:hover {
+  background: var(--glass-bg);
+  border-color: rgba(255, 255, 255, 0.5);
+  box-shadow: var(--glass-shadow);
+}
+
+.glass-btn--outline:active {
+  background: var(--glass-bg-light);
+}
+
+/* ========================================
+   SIZES
+   ======================================== */
+
+.glass-btn--sm {
+  font-size: var(--text-sm);
+  padding: var(--space-2) var(--space-4);
+  min-height: 32px;
+}
+
+.glass-btn--md {
+  font-size: var(--text-base);
+  padding: var(--space-3) var(--space-6);
+  min-height: 40px;
+}
+
+.glass-btn--lg {
+  font-size: var(--text-lg);
+  padding: var(--space-4) var(--space-8);
+  min-height: 48px;
+}
+
+/* ========================================
+   STATES
+   ======================================== */
+
+.glass-btn--full-width {
+  width: 100%;
+}
+
+.glass-btn--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.glass-btn--loading {
+  pointer-events: none;
+  position: relative;
+}
+
+.glass-btn--loading .glass-btn__content {
+  opacity: 0;
+}
+
+/* ========================================
+   ICONS
+   ======================================== */
+
+.glass-btn__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2em;
+}
+
+.glass-btn__icon--left {
+  margin-right: calc(var(--space-1) * -1);
+}
+
+.glass-btn__icon--right {
+  margin-left: calc(var(--space-1) * -1);
+}
+
+/* ========================================
+   LOADING SPINNER
+   ======================================== */
+
+.glass-btn__spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-top-color: var(--color-white);
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+.glass-btn--lg .spinner {
+  width: 20px;
+  height: 20px;
+  border-width: 3px;
+}
+
+.glass-btn--sm .spinner {
+  width: 14px;
+  height: 14px;
+  border-width: 2px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ========================================
+   FOCUS STATES
+   ======================================== */
+
+.glass-btn:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* ========================================
+   BROWSER FALLBACKS
+   ======================================== */
+
+@supports not (backdrop-filter: blur(10px)) {
+  .glass-btn--primary,
+  .glass-btn--secondary,
+  .glass-btn--danger {
+    background: rgba(0, 0, 0, 0.6);
+  }
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+
+@media (max-width: 768px) {
+  .glass-btn {
+    /* Slightly larger touch targets on mobile */
+    min-height: 44px;
+  }
+
+  .glass-btn--sm {
+    min-height: 36px;
+  }
+
+  .glass-btn--lg {
+    min-height: 52px;
+  }
+}
