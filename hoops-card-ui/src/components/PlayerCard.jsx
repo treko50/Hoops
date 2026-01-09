@@ -32,7 +32,8 @@ export const PlayerCard = ({
     stats,
     gradient,
     age,
-    gamesPlayed
+    gamesPlayed,
+    photoUrl
   } = cardData;
 
   // Get gradient colors based on rarity
@@ -85,11 +86,20 @@ export const PlayerCard = ({
         </div>
       </div>
 
-      {/* Player Photo Placeholder */}
+      {/* Player Photo */}
       <div className="photo-section">
-        <div className="photo-placeholder">
-          <span className="player-initial">{playerName?.charAt(0) || '?'}</span>
-        </div>
+        {photoUrl ? (
+          <img
+            src={photoUrl}
+            alt={playerName}
+            className="player-photo"
+            loading="lazy"
+          />
+        ) : (
+          <div className="photo-placeholder">
+            <span className="player-initial">{playerName?.charAt(0) || '?'}</span>
+          </div>
+        )}
       </div>
 
       {/* Player Name */}

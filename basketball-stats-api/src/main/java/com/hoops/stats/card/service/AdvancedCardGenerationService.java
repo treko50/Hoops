@@ -286,18 +286,67 @@ public class AdvancedCardGenerationService {
     }
 
     /**
+     * Generate player image URL using UI Avatars with team colors
+     * @param playerName Player full name
+     * @param teamAbbr Team abbreviation
+     * @return Image URL
+     */
+    private String generatePlayerImageUrl(String playerName, String teamAbbr) {
+        if (playerName == null || playerName.isEmpty()) {
+            return null;
+        }
+
+        // URL encode player name
+        String encodedName = java.net.URLEncoder.encode(playerName, java.nio.charset.StandardCharsets.UTF_8);
+
+        // Team color mapping (primary color for each NBA team)
+        Map<String, String> teamColors = Map.ofEntries(
+                Map.entry("ATL", "E03A3E"), Map.entry("BOS", "007A33"), Map.entry("BRK", "000000"),
+                Map.entry("CHA", "1D1160"), Map.entry("CHI", "CE1141"), Map.entry("CLE", "6F263D"),
+                Map.entry("DAL", "00538C"), Map.entry("DEN", "0E2240"), Map.entry("DET", "C8102E"),
+                Map.entry("GSW", "1D428A"), Map.entry("HOU", "CE1141"), Map.entry("IND", "002D62"),
+                Map.entry("LAC", "C8102E"), Map.entry("LAL", "552583"), Map.entry("MEM", "5D76A9"),
+                Map.entry("MIA", "98002E"), Map.entry("MIL", "00471B"), Map.entry("MIN", "0C2340"),
+                Map.entry("NOP", "0C2340"), Map.entry("NYK", "F58426"), Map.entry("OKC", "007AC1"),
+                Map.entry("ORL", "0077C0"), Map.entry("PHI", "006BB6"), Map.entry("PHX", "1D1160"),
+                Map.entry("POR", "E03A3E"), Map.entry("SAC", "5A2D81"), Map.entry("SAS", "C4CED4"),
+                Map.entry("TOR", "CE1141"), Map.entry("UTA", "002B5C"), Map.entry("WAS", "E31837"),
+                Map.entry("BKN", "000000"), Map.entry("CHO", "1D1160"), Map.entry("NOH", "0C2340"),
+                Map.entry("NJN", "000000"), Map.entry("SEA", "007AC1"), Map.entry("VAN", "00B2A9")
+        );
+
+        // Get team color or use default (indigo)
+        String bgColor = (teamAbbr != null && teamColors.containsKey(teamAbbr))
+                ? teamColors.get(teamAbbr)
+                : "6366f1";
+
+        // Generate UI Avatars URL with team colors
+        return String.format("https://ui-avatars.com/api/?name=%s&size=400&bold=true&background=%s&color=ffffff",
+                encodedName, bgColor);
+    }
+
+    /**
      * Map R2 data to Player object
      */
     private Player mapToPlayer(Map<String, Object> data, String id) {
+        String playerName = (String) data.get("Name");
+        String teamAbbr = (String) data.get("Team_ID");
+
+        // Generate image URL if not already present
+        String photoUrl = (String) data.get("Photo_URL");
+        if (photoUrl == null || photoUrl.isEmpty()) {
+            photoUrl = generatePlayerImageUrl(playerName, teamAbbr);
+        }
+
         return Player.builder()
                 .id(id)
-                .name((String) data.get("Name"))
-                .displayName((String) data.get("Name"))
+                .name(playerName)
+                .displayName(playerName)
                 .position((String) data.get("Position"))
                 .team((String) data.get("Team"))
-                .teamAbbr((String) data.get("Team_ID"))
+                .teamAbbr(teamAbbr)
                 .number(data.get("Number") != null ? ((Number) data.get("Number")).intValue() : null)
-                .photoUrl((String) data.get("Photo_URL"))
+                .photoUrl(photoUrl)
                 .teamLogoUrl((String) data.get("Team_Logo_URL"))
                 .build();
     }

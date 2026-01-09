@@ -63,11 +63,4 @@ GlassCard.propTypes = {
   style: PropTypes.object,
 };
 
-GlassCard.defaultProps = {
-  variant: 'default',
-  interactive: false,
-  padding: 'default',
-  className: '',
-};
-
 export default GlassCard;

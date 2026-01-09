@@ -8,30 +8,42 @@ A comprehensive basketball statistics platform with card generation and visualiz
 Hoops/
 ├── .gitignore                          # Git ignore rules (includes credentials)
 ├── README.md                           # This file
-├── CARD_SYSTEM_SUMMARY.md              # Card system documentation
+├── serviceAccountKey.json              # Firebase credentials (gitignored)
 │
 ├── basketball-stats-api/               # Spring Boot Backend API
 │   ├── src/                            # Java source code
-│   ├── exports/                        # Generated player data JSONs
-│   │   ├── 2026.json                   # 2026 season raw data
-│   │   └── 2026-cards.json             # 2026 generated cards
+│   │   ├── main/java/                  # Application code
+│   │   └── main/resources/             # Configuration files
 │   └── pom.xml                         # Maven configuration
 │
 ├── hoops-card-ui/                      # React UI Component Library
 │   ├── src/                            # React components
-│   │   ├── components/                 # PlayerCard, CardGrid
-│   │   ├── styles/                     # CSS files
-│   │   └── demo.jsx                    # Demo application
+│   │   ├── components/                 # PlayerCard, CardGrid, UI components
+│   │   ├── pages/                      # Page components
+│   │   ├── context/                    # React context providers
+│   │   ├── services/                   # API service layer
+│   │   └── styles/                     # CSS files
 │   ├── package.json
 │   ├── vite.config.js
-│   ├── README.md                       # Component library docs
-│   └── INTEGRATION_EXAMPLE.md          # How to use in other apps
+│   └── README.md                       # Component library docs
 │
-├── utils/                              # Shared utilities
-│   └── ratingCalculator.js             # FIFA-style rating calculator
+├── scripts/                            # Data processing & utility scripts
+│   ├── advancedStatsCalculator.js     # Advanced stats calculator
+│   ├── ratingCalculator.js            # FIFA-style rating calculator
+│   ├── generate-2026-cards.js         # Card generation script
+│   ├── scrapePlayerImages.js          # Image scraping utilities
+│   ├── addPlayerImages.js             # Add images to cards
+│   ├── r2-upload.js                   # R2 upload utilities
+│   ├── logs/                          # Script execution logs
+│   └── README.md                      # Scripts documentation
 │
-├── generate-2026-cards.js              # Card generation script
-└── serviceAccountKey.json              # Firebase credentials (gitignored)
+└── docs/                              # Documentation
+    ├── TESTING_GUIDE.md               # Testing guide
+    └── summaries/                     # Project summaries
+        ├── CARD_SYSTEM_SUMMARY.md     # Card system overview
+        ├── CLEANUP_SUMMARY.md         # Cleanup history
+        ├── FIXES_SUMMARY.md           # Bug fixes log
+        └── REGENERATE_CARDS_WITH_IMAGES.md
 ```
 
 ## Components
@@ -76,17 +88,34 @@ npm run dev        # Start demo at http://localhost:5173
 npm run build      # Build for production
 ```
 
-### 3. Card Generation System
-**Location**: `generate-2026-cards.js`, `utils/ratingCalculator.js`
+### 3. Scripts & Utilities
+**Location**: `scripts/`
 
-Generates player cards with FIFA-style ratings.
+Data processing scripts for generating cards and uploading to R2.
+
+**Main Script**:
+- `generate-2026-cards.js` - **All-in-one** card generator with image scraping
+  - Generates player cards with FIFA-style ratings
+  - Scrapes player images from Basketball Reference
+  - Outputs R2-compatible JSON format
+  - Runtime: ~20 minutes for 500+ players
+
+**Utilities**:
+- `advancedStatsCalculator.js` - Calculate advanced stats (PER, TS%, etc.)
+- `ratingCalculator.js` - Calculate ratings and assign rarity tiers
+
+**R2 Upload**:
+- `r2-upload.js` - Upload card data to Cloudflare R2 storage
+- `upload-r2-sdk.js` - Alternative R2 upload using AWS SDK
 
 **Usage**:
 ```bash
-node generate-2026-cards.js
+cd scripts
+node generate-2026-cards.js  # Generate cards with images
+node r2-upload.js             # Upload to R2
 ```
 
-**Output**: `basketball-stats-api/exports/2026-cards.json` (507 cards)
+See `scripts/README.md` for detailed workflow.
 
 ## Getting Started
 
@@ -106,14 +135,16 @@ npm run dev
 
 ### Generate Player Cards
 ```bash
+cd scripts
 node generate-2026-cards.js
 ```
 
 ## Data Flow
 
-1. **Data Scraping** (Backend): Basketball Reference → Spring API → JSON exports
-2. **Card Generation**: JSON data → `generate-2026-cards.js` → Card data
-3. **UI Display**: Card data → React components → User interface
+1. **Data Scraping** (Backend): Basketball Reference → Spring API → Cloudflare R2
+2. **Card Generation**: Stats data → `scripts/generate-2026-cards.js` → Advanced cards → R2
+3. **Backend Cache**: R2 → AdvancedCardCache → In-memory indexes
+4. **Frontend Display**: API → React components → User interface
 
 ## Card Rating System
 
@@ -152,13 +183,14 @@ Players are rated on a 0-99 scale using position-specific weights:
 
 1. **Backend**: Add endpoints in `basketball-stats-api/src/`
 2. **Frontend**: Add components in `hoops-card-ui/src/components/`
-3. **Utilities**: Add shared code in `utils/`
+3. **Scripts**: Add utilities in `scripts/`
 
 ### Data Updates
 
 1. Run data scraping via Spring API
-2. Generate cards: `node generate-2026-cards.js`
-3. Deploy to R2 via Spring API
+2. Generate cards: `cd scripts && node generate-2026-cards.js`
+3. Upload to R2: `cd scripts && node r2-upload.js`
+4. Reload cache: POST to `/api/cards/advanced/cache/reload`
 
 ## Deployment
 
@@ -206,9 +238,10 @@ See `hoops-card-ui/INTEGRATION_EXAMPLE.md` for detailed examples.
 
 ## Documentation
 
-- `CARD_SYSTEM_SUMMARY.md` - Complete card system overview
+- `docs/summaries/CARD_SYSTEM_SUMMARY.md` - Complete card system overview
+- `docs/TESTING_GUIDE.md` - Testing guide
 - `hoops-card-ui/README.md` - Component library documentation
-- `hoops-card-ui/INTEGRATION_EXAMPLE.md` - Integration guide
+- `scripts/README.md` - Scripts documentation
 
 ## Future Enhancements
 
@@ -226,13 +259,22 @@ ISC
 
 ## Maintenance Notes
 
-### Cleanup Completed (2026-01-07)
+### Cleanup Completed (2026-01-09)
+- ✅ Fixed JSON format mismatch in AdvancedCardCache
+- ✅ Fixed CORS configuration for port 5175
+- ✅ Organized all scripts into `scripts/` folder
+- ✅ Moved documentation to `docs/` folder
+- ✅ Removed temporary files (advanced-cards*.json, lebron-page.html)
+- ✅ Removed log files from root (moved to scripts/logs/)
+- ✅ Updated .gitignore to prevent future clutter
+- ✅ Created README.md for scripts folder
+
+### Previous Cleanup (2026-01-07)
 - ✅ Removed `shared-base-module/` (Express app superseded by Spring)
 - ✅ Removed old scraping scripts (moved to backend)
 - ✅ Removed debug files
 - ✅ Removed root `node_modules/` (no longer needed)
-- ✅ Extracted rating calculator to `utils/`
 - ✅ Added comprehensive `.gitignore`
 - ✅ Credentials properly ignored from Git
 
-The repository is now clean and organized with clear separation between backend, frontend, and utilities.
+The repository is now clean and organized with clear separation between backend, frontend, scripts, and documentation.

@@ -24,6 +24,7 @@ public class CorsConfig {
         config.setAllowedOrigins(Arrays.asList(
             "http://localhost:5173",     // Vite dev server
             "http://localhost:5174",     // Vite dev server (alternate port)
+            "http://localhost:5175",     // Vite dev server (alternate port)
             "http://localhost:3000",     // Common React port
             "http://localhost:4200"      // Common Angular port
         ));

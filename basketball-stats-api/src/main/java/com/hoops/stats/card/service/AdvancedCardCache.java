@@ -67,9 +67,29 @@ public class AdvancedCardCache {
 
             ResponseInputStream<GetObjectResponse> response = r2Client.getObject(request);
 
-            // Parse JSON - format is Map<String, PlayerCard>
-            TypeReference<Map<String, PlayerCard>> typeRef = new TypeReference<Map<String, PlayerCard>>() {};
-            Map<String, PlayerCard> cardsMap = objectMapper.readValue(response, typeRef);
+            // Parse JSON - format can be either:
+            // 1. {"cards": [array of cards]} - new format
+            // 2. {playerId: card, ...} - old format (map)
+            com.fasterxml.jackson.databind.JsonNode rootNode = objectMapper.readTree(response);
+
+            Map<String, PlayerCard> cardsMap = new HashMap<>();
+
+            if (rootNode.has("cards") && rootNode.get("cards").isArray()) {
+                // New format: {"cards": [...]}
+                TypeReference<java.util.List<PlayerCard>> listTypeRef = new TypeReference<java.util.List<PlayerCard>>() {};
+                java.util.List<PlayerCard> cardsList = objectMapper.convertValue(rootNode.get("cards"), listTypeRef);
+
+                // Convert list to map indexed by playerId
+                for (PlayerCard card : cardsList) {
+                    if (card.getPlayerId() != null) {
+                        cardsMap.put(card.getPlayerId(), card);
+                    }
+                }
+            } else {
+                // Old format: direct map
+                TypeReference<Map<String, PlayerCard>> mapTypeRef = new TypeReference<Map<String, PlayerCard>>() {};
+                cardsMap = objectMapper.convertValue(rootNode, mapTypeRef);
+            }
 
             // Store in primary index
             byId = cardsMap;

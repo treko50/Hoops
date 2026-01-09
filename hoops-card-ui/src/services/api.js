@@ -5,6 +5,12 @@
 
 const API_BASE_URL = 'http://localhost:8080/api';
 
+// Cache for all cards to prevent redundant API calls
+let cardsCache = null;
+let cacheTimestamp = null;
+let fetchPromise = null; // Prevent duplicate simultaneous fetches
+const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
+
 /**
  * Fetch all cards with optional minimum rating filter
  * @param {number} minRating - Minimum rating (default: 0)
@@ -12,13 +18,44 @@ const API_BASE_URL = 'http://localhost:8080/api';
  */
 export const fetchAllCards = async (minRating = 0) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/cards/advanced?minRating=${minRating}`);
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+    // Check if we have a valid cache
+    const now = Date.now();
+    if (cardsCache && cacheTimestamp && (now - cacheTimestamp) < CACHE_DURATION) {
+      console.log('📦 Using cached cards data');
+      return cardsCache.filter(card => card.overallRating >= minRating);
     }
-    const data = await response.json();
-    return data.cards || [];
+
+    // If a fetch is already in progress, wait for it
+    if (fetchPromise) {
+      console.log('⏳ Waiting for existing API call to complete...');
+      await fetchPromise;
+      return cardsCache.filter(card => card.overallRating >= minRating);
+    }
+
+    // Fetch fresh data
+    console.log('🌐 Fetching cards from API...');
+    fetchPromise = (async () => {
+      const response = await fetch(`${API_BASE_URL}/cards/advanced?minRating=0`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      const allCards = data.cards || [];
+
+      // Update cache
+      cardsCache = allCards;
+      cacheTimestamp = now;
+      fetchPromise = null; // Clear the promise
+
+      return allCards;
+    })();
+
+    const allCards = await fetchPromise;
+
+    // Filter by minRating if specified
+    return allCards.filter(card => card.overallRating >= minRating);
   } catch (error) {
+    fetchPromise = null; // Clear promise on error
     console.error('Error fetching cards:', error);
     throw error;
   }
@@ -225,6 +262,15 @@ export const getRarityStats = async () => {
   }
 };
 
+/**
+ * Clear the cards cache (useful after data updates)
+ */
+export const clearCardsCache = () => {
+  cardsCache = null;
+  cacheTimestamp = null;
+  console.log('🗑️ Cards cache cleared');
+};
+
 export default {
   fetchAllCards,
   fetchCardById,
@@ -236,4 +282,5 @@ export default {
   getTeamList,
   getPositionList,
   getRarityStats,
+  clearCardsCache,
 };

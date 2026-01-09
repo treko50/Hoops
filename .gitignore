@@ -37,6 +37,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 logs/
+scripts/logs/
 
 # Temporary files
 *.tmp
@@ -44,6 +45,12 @@ logs/
 nul
 temp/
 tmp/
+
+# Local data files (should only be in R2)
+advanced-cards*.json
+*-download.json
+*.html
+!hoops-card-ui/**/*.html
 
 # Java/Maven specific
 basketball-stats-api/.mvn/

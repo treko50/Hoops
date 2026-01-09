@@ -235,7 +235,7 @@ GlassSelect.propTypes = {
 export const GlassRangeSlider = ({
   min = 0,
   max = 100,
-  value,
+  value = 0,
   onChange,
   label,
   showValue = true,
@@ -243,7 +243,7 @@ export const GlassRangeSlider = ({
   className = '',
   ...props
 }) => {
-  const percentage = ((value - min) / (max - min)) * 100;
+  const percentage = value !== undefined && value !== null ? ((value - min) / (max - min)) * 100 : 0;
 
   return (
     <div className={`glass-slider-container ${className}`}>
@@ -287,10 +287,10 @@ GlassRangeSlider.propTypes = {
   max: PropTypes.number,
 
   /** Current value */
-  value: PropTypes.number.isRequired,
+  value: PropTypes.number,
 
   /** Change handler */
-  onChange: PropTypes.func.isRequired,
+  onChange: PropTypes.func,
 
   /** Label text */
   label: PropTypes.string,
