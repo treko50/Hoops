@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { GlassCard } from '../components/ui/GlassCard';
 import { GlassButton } from '../components/ui/GlassButton';
+import { PlayerCard } from '../components/PlayerCard';
+import { AdvancedCardView } from '../components/AdvancedCardView';
 import { PlayerSelector } from '../components/comparison/PlayerSelector';
 import { ComparisonTable } from '../components/comparison/ComparisonTable';
 import { FiPlus, FiX } from 'react-icons/fi';
@@ -14,6 +16,8 @@ export const ComparisonPage = () => {
   const [players, setPlayers] = useState([null, null, null, null]);
   const [selectorOpen, setSelectorOpen] = useState(false);
   const [selectedSlot, setSelectedSlot] = useState(null);
+  const [selectedCardForView, setSelectedCardForView] = useState(null);
+  const [isCardViewOpen, setIsCardViewOpen] = useState(false);
 
   const openSelector = (slotIndex) => {
     setSelectedSlot(slotIndex);
@@ -28,7 +32,8 @@ export const ComparisonPage = () => {
     }
   };
 
-  const removePlayer = (slotIndex) => {
+  const removePlayer = (slotIndex, event) => {
+    event.stopPropagation();
     const newPlayers = [...players];
     newPlayers[slotIndex] = null;
     setPlayers(newPlayers);
@@ -36,6 +41,11 @@ export const ComparisonPage = () => {
 
   const clearAll = () => {
     setPlayers([null, null, null, null]);
+  };
+
+  const handleCardClick = (player) => {
+    setSelectedCardForView(player);
+    setIsCardViewOpen(true);
   };
 
   // Get players that are already selected
@@ -67,22 +77,19 @@ export const ComparisonPage = () => {
         {players.map((player, index) => (
           <div key={index} className="player-slot">
             {player ? (
-              <GlassCard variant="elevated" className="player-slot-filled">
+              <div className="player-slot-filled">
                 <button
                   className="remove-player-btn"
-                  onClick={() => removePlayer(index)}
+                  onClick={(e) => removePlayer(index, e)}
                   aria-label="Remove player"
                 >
                   <FiX />
                 </button>
-                <div className="slot-player-info">
-                  <div className="slot-player-name">{player.playerName}</div>
-                  <div className="slot-player-details">
-                    {player.position} • {player.teamAbbr || player.team}
-                  </div>
-                  <div className="slot-player-rating">{player.overallRating}</div>
-                </div>
-              </GlassCard>
+                <PlayerCard
+                  cardData={player}
+                  onClick={() => handleCardClick(player)}
+                />
+              </div>
             ) : (
               <GlassCard
                 variant="light"
@@ -124,6 +131,15 @@ export const ComparisonPage = () => {
         onSelectPlayer={handleSelectPlayer}
         excludePlayerIds={selectedPlayerIds}
       />
+
+      {/* Card Detail Modal */}
+      {selectedCardForView && (
+        <AdvancedCardView
+          isOpen={isCardViewOpen}
+          onClose={() => setIsCardViewOpen(false)}
+          cardData={selectedCardForView}
+        />
+      )}
     </div>
   );
 };

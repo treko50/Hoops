@@ -310,3 +310,209 @@
     gap: 16px;
   }
 }
+
+/* ========================================
+   TABS
+   ======================================== */
+
+.card-tabs {
+  display: flex;
+  gap: var(--space-2);
+  margin-bottom: var(--space-6);
+  padding: 0 var(--space-6);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.card-tab {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-5);
+  background: transparent;
+  border: none;
+  border-bottom: 3px solid transparent;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  position: relative;
+  bottom: -1px;
+}
+
+.card-tab:hover {
+  color: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.card-tab.active {
+  color: white;
+  border-bottom-color: #ffd700;
+}
+
+.tab-icon {
+  font-size: 20px;
+}
+
+.tab-label {
+  white-space: nowrap;
+}
+
+.card-tab-content {
+  padding: 0 var(--space-6) var(--space-6);
+}
+
+/* ========================================
+   SEASON STATS TAB
+   ======================================== */
+
+.season-stats-content {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+
+.stat-category-card {
+  background: var(--glass-bg-light);
+  backdrop-filter: blur(var(--blur-md));
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-5);
+  transition: all var(--transition-base);
+}
+
+.stat-category-card:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.stat-category-title {
+  font-size: 18px;
+  font-weight: 800;
+  color: white;
+  margin: 0 0 var(--space-4) 0;
+  padding-bottom: var(--space-3);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.stat-rows {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-2) 0;
+}
+
+.stat-row-label {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 500;
+}
+
+.stat-row-value {
+  font-size: 18px;
+  font-weight: 800;
+  color: white;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.stat-row-unit {
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.6);
+  margin-left: 4px;
+}
+
+.stats-footer-note {
+  text-align: center;
+  padding: var(--space-5);
+  background: var(--glass-bg-light);
+  backdrop-filter: blur(var(--blur-md));
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl);
+}
+
+.stats-footer-note p {
+  margin: 0 0 var(--space-2) 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: white;
+}
+
+.stats-footer-note .note-text {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.6);
+  font-style: italic;
+}
+
+/* ========================================
+   ADVANCED ATTRIBUTES TAB
+   ======================================== */
+
+.advanced-attributes-content {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.no-attributes {
+  padding: var(--space-8);
+  text-align: center;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 16px;
+}
+
+/* Header photo in modal */
+.header-photo {
+  width: 80px;
+  height: 80px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--glass-bg-light);
+  backdrop-filter: blur(var(--blur-md));
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  flex-shrink: 0;
+}
+
+.header-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.header-left {
+  display: flex;
+  gap: var(--space-4);
+  align-items: center;
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+
+@media (max-width: 768px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .card-tabs {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .tab-label {
+    font-size: 14px;
+  }
+
+  .stat-category-card {
+    padding: var(--space-4);
+  }
+}

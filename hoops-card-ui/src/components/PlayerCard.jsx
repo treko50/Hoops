@@ -1,15 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FiHeart } from 'react-icons/fi';
 import { FaHeart } from 'react-icons/fa';
-import '../styles/PlayerCard.css';
+import { removeWhiteBackground } from '../utils/removeWhiteBackground';
+import '../styles/PlayerCardFUT.css';
 
 /**
- * PlayerCard Component
- * Displays a FIFA Ultimate Team style basketball player card with glassmorphism
+ * PlayerCard Component - FIFA Ultimate Team Style
+ * Shield-shaped card with rating, position, photo, name, and 6 attributes in 2 columns
  *
  * @param {Object} props - Component props
- * @param {Object} props.cardData - Card data from backend (2026-cards.json format)
+ * @param {Object} props.cardData - Card data from backend
  * @param {Function} props.onClick - Optional click handler
  * @param {boolean} props.isFavorite - Whether card is favorited
  * @param {Function} props.onToggleFavorite - Toggle favorite handler
@@ -27,20 +28,33 @@ export const PlayerCard = ({
     position,
     overallRating,
     rarity,
-    team,
     teamAbbr,
-    stats,
-    gradient,
-    age,
-    gamesPlayed,
+    advancedAttributes,
     photoUrl
   } = cardData;
 
+  // State for processed image (with white background removed)
+  const [processedPhotoUrl, setProcessedPhotoUrl] = useState(null);
+
+  // Process image to remove white background
+  useEffect(() => {
+    if (photoUrl) {
+      removeWhiteBackground(photoUrl, 240)
+        .then(url => setProcessedPhotoUrl(url))
+        .catch(err => {
+          console.error('Failed to process player image:', err);
+          setProcessedPhotoUrl(photoUrl); // Fallback to original
+        });
+    } else {
+      setProcessedPhotoUrl(null);
+    }
+  }, [photoUrl]);
+
+  // Get top 6 attributes from advanced attributes
+  const topAttributes = getTopAttributes(advancedAttributes);
+
   // Get gradient colors based on rarity
-  const gradientColors = gradient || getDefaultGradient(rarity);
-  const gradientStyle = {
-    background: `linear-gradient(135deg, ${gradientColors[0]} 0%, ${gradientColors[1]} 50%, ${gradientColors[2]} 100%)`
-  };
+  const gradientColors = getDefaultGradient(rarity);
 
   const handleFavoriteClick = (e) => {
     e.stopPropagation();
@@ -51,26 +65,27 @@ export const PlayerCard = ({
 
   return (
     <motion.div
-      className={`player-card ${rarity} ${className}`}
+      className={`fut-card ${rarity} ${className}`}
       onClick={onClick}
-      style={gradientStyle}
       whileHover={{ y: -8, scale: 1.02 }}
       whileTap={{ scale: 0.98 }}
       transition={{ type: 'spring', stiffness: 300, damping: 20 }}
     >
-      {/* Shine overlay */}
-      <div className="card-shine" />
+      {/* Card background with gradient */}
+      <div
+        className="fut-card-bg"
+        style={{
+          background: `linear-gradient(135deg, ${gradientColors[0]} 0%, ${gradientColors[1]} 50%, ${gradientColors[2]} 100%)`
+        }}
+      />
 
-      {/* Glass overlay */}
-      <div className="card-glass-overlay" />
-
-      {/* Border */}
-      <div className="card-border" />
+      {/* Shine effect */}
+      <div className="fut-card-shine" />
 
       {/* Favorite Button */}
       {onToggleFavorite && (
         <button
-          className={`favorite-btn ${isFavorite ? 'favorite-btn--active' : ''}`}
+          className={`fut-favorite-btn ${isFavorite ? 'active' : ''}`}
           onClick={handleFavoriteClick}
           aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
         >
@@ -78,72 +93,100 @@ export const PlayerCard = ({
         </button>
       )}
 
-      {/* Rating Section */}
-      <div className="rating-section">
-        <div className="rating-badge">
-          <div className="overall-rating">{overallRating}</div>
-          <div className="position">{position}</div>
-        </div>
+      {/* Top section - Rating & Position */}
+      <div className="fut-card-top">
+        <div className="fut-rating">{overallRating}</div>
+        <div className="fut-position">{position}</div>
+        <div className="fut-team">{teamAbbr}</div>
       </div>
 
       {/* Player Photo */}
-      <div className="photo-section">
-        {photoUrl ? (
+      <div className="fut-photo-container">
+        {processedPhotoUrl ? (
           <img
-            src={photoUrl}
+            src={processedPhotoUrl}
             alt={playerName}
-            className="player-photo"
+            className="fut-player-photo"
             loading="lazy"
           />
+        ) : photoUrl ? (
+          <div className="fut-photo-placeholder">
+            <span className="fut-initial" style={{ fontSize: '14px' }}>...</span>
+          </div>
         ) : (
-          <div className="photo-placeholder">
-            <span className="player-initial">{playerName?.charAt(0) || '?'}</span>
+          <div className="fut-photo-placeholder">
+            <span className="fut-initial">{playerName?.charAt(0) || '?'}</span>
           </div>
         )}
       </div>
 
       {/* Player Name */}
-      <div className="name-section">
-        <div className="player-name">{truncateText(playerName, 20)}</div>
+      <div className="fut-name-section">
+        <div className="fut-player-name">{truncateText(playerName, 18)}</div>
       </div>
 
-      {/* Stats Section */}
-      <div className="stats-section">
-        <div className="stat">
-          <div className="stat-label">PPG</div>
-          <div className="stat-value">{stats?.ppg || '0.0'}</div>
+      {/* Stats - 2 columns, 3 rows */}
+      <div className="fut-stats">
+        <div className="fut-stats-column">
+          <div className="fut-stat-row">
+            <span className="fut-stat-value">{topAttributes[0].value}</span>
+            <span className="fut-stat-label">{topAttributes[0].label}</span>
+          </div>
+          <div className="fut-stat-row">
+            <span className="fut-stat-value">{topAttributes[1].value}</span>
+            <span className="fut-stat-label">{topAttributes[1].label}</span>
+          </div>
+          <div className="fut-stat-row">
+            <span className="fut-stat-value">{topAttributes[2].value}</span>
+            <span className="fut-stat-label">{topAttributes[2].label}</span>
+          </div>
         </div>
-        <div className="stat">
-          <div className="stat-label">RPG</div>
-          <div className="stat-value">{stats?.rpg || '0.0'}</div>
-        </div>
-        <div className="stat">
-          <div className="stat-label">APG</div>
-          <div className="stat-value">{stats?.apg || '0.0'}</div>
-        </div>
-        <div className="stat">
-          <div className="stat-label">FG%</div>
-          <div className="stat-value">{stats?.fgPct || '0%'}</div>
+
+        <div className="fut-stats-divider"></div>
+
+        <div className="fut-stats-column">
+          <div className="fut-stat-row">
+            <span className="fut-stat-value">{topAttributes[3].value}</span>
+            <span className="fut-stat-label">{topAttributes[3].label}</span>
+          </div>
+          <div className="fut-stat-row">
+            <span className="fut-stat-value">{topAttributes[4].value}</span>
+            <span className="fut-stat-label">{topAttributes[4].label}</span>
+          </div>
+          <div className="fut-stat-row">
+            <span className="fut-stat-value">{topAttributes[5].value}</span>
+            <span className="fut-stat-label">{topAttributes[5].label}</span>
+          </div>
         </div>
       </div>
-
-      {/* Team Info */}
-      <div className="team-section">
-        <span className="team-name">{teamAbbr || team || 'N/A'}</span>
-      </div>
-
-      {/* Rarity Badge */}
-      <div className="rarity-section">
-        <div className="rarity-badge">{rarity?.toUpperCase()?.replace('_', ' ')}</div>
-      </div>
-
-      {/* Games Played (Bottom Right) */}
-      {gamesPlayed && (
-        <div className="games-played">GP: {gamesPlayed}</div>
-      )}
     </motion.div>
   );
 };
+
+/**
+ * Get top 6 attributes from advanced attributes
+ */
+function getTopAttributes(advancedAttributes) {
+  if (!advancedAttributes) {
+    return [
+      { label: 'OFF', value: '--' },
+      { label: 'DEF', value: '--' },
+      { label: 'PLY', value: '--' },
+      { label: 'ATH', value: '--' },
+      { label: 'REB', value: '--' },
+      { label: 'EFF', value: '--' }
+    ];
+  }
+
+  return [
+    { label: 'OFF', value: advancedAttributes.offense?.overall || '--' },
+    { label: 'DEF', value: advancedAttributes.defense?.overall || '--' },
+    { label: 'PLY', value: advancedAttributes.playmaking?.overall || '--' },
+    { label: 'ATH', value: advancedAttributes.athleticism?.overall || '--' },
+    { label: 'REB', value: advancedAttributes.rebounding?.overall || '--' },
+    { label: 'EFF', value: advancedAttributes.efficiency?.overall || '--' }
+  ];
+}
 
 /**
  * Helper: Truncate text to max length
@@ -159,14 +202,14 @@ function truncateText(text, maxLength) {
  */
 function getDefaultGradient(rarity) {
   const gradients = {
-    'bronze': ['#8B4513', '#CD7F32', '#A0522D'],
-    'silver': ['#808080', '#C0C0C0', '#A9A9A9'],
-    'silver_rare': ['#C0C0C0', '#E8E8E8', '#D3D3D3'],
-    'gold': ['#DAA520', '#FFD700', '#FFA500'],
-    'gold_rare': ['#FF8C00', '#FFD700', '#FF6347'],
-    'legendary': ['#4A148C', '#9C27B0', '#E91E63']
+    'bronze': ['#D4915F', '#B8734A', '#9E6042'],
+    'silver': ['#C0C0C0', '#A8A8A8', '#909090'],
+    'silver_rare': ['#E8E8E8', '#C0C0C0', '#A8A8A8'],
+    'gold': ['#F5E6B3', '#D4AF37', '#C9A959'],
+    'gold_rare': ['#FFD700', '#FFA500', '#DAA520'],
+    'legendary': ['#E91E63', '#9C27B0', '#673AB7']
   };
-  return gradients[rarity] || gradients.bronze;
+  return gradients[rarity] || gradients.gold;
 }
 
 export default PlayerCard;

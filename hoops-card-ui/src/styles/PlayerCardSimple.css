@@ -1,0 +1,344 @@
+/**
+ * Simplified PlayerCard Styles
+ * Clean design showing image, name, and top 6 attributes
+ */
+
+@import './design-system.css';
+
+/* ========================================
+   CARD CONTAINER
+   ======================================== */
+
+.player-card-simple {
+  position: relative;
+  width: 280px;
+  height: 420px;
+  border-radius: var(--radius-2xl);
+  padding: var(--space-5);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), var(--glass-shadow);
+  cursor: pointer;
+  overflow: visible;
+  transition: all var(--transition-base);
+  will-change: transform;
+  font-family: var(--font-primary);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Glass overlay */
+.player-card-simple .card-glass-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--blur-xs)) saturate(120%);
+  -webkit-backdrop-filter: blur(var(--blur-xs)) saturate(120%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Shine overlay */
+.player-card-simple .card-shine {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.25) 0%, transparent 60%);
+  opacity: 0.4;
+  pointer-events: none;
+  z-index: 1;
+  transition: opacity var(--transition-base);
+}
+
+.player-card-simple:hover .card-shine {
+  opacity: 0.6;
+}
+
+/* ========================================
+   FAVORITE BUTTON
+   ======================================== */
+
+.player-card-simple .favorite-btn {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  z-index: 10;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--glass-bg-light);
+  backdrop-filter: blur(var(--blur-md)) saturate(180%);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-full);
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 16px;
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.player-card-simple .favorite-btn:hover {
+  background: var(--glass-bg);
+  color: white;
+  transform: scale(1.1);
+}
+
+.player-card-simple .favorite-btn--active {
+  color: #ff4081;
+}
+
+/* ========================================
+   RATING BADGE (Top Left Corner)
+   ======================================== */
+
+.rating-badge-corner {
+  position: absolute;
+  top: var(--space-3);
+  left: var(--space-3);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--glass-bg-light);
+  backdrop-filter: blur(var(--blur-md)) saturate(180%);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-2) var(--space-3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.rating-value {
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1;
+  color: white;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.rating-position {
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  margin-top: 2px;
+}
+
+/* ========================================
+   PLAYER PHOTO
+   ======================================== */
+
+.card-photo-section {
+  position: relative;
+  z-index: 5;
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: var(--space-10) 0 var(--space-3);
+  height: 160px;
+}
+
+.card-player-photo {
+  max-width: 100%;
+  max-height: 160px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  object-position: center bottom;
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.4));
+}
+
+.card-photo-placeholder {
+  width: 120px;
+  height: 120px;
+  border-radius: var(--radius-full);
+  background: var(--glass-bg-light);
+  backdrop-filter: blur(var(--blur-md));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.card-photo-placeholder .player-initial {
+  font-size: 48px;
+  font-weight: 800;
+  color: white;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+/* ========================================
+   PLAYER NAME & TEAM
+   ======================================== */
+
+.card-name-section {
+  position: relative;
+  z-index: 5;
+  text-align: center;
+  margin-bottom: var(--space-3);
+  flex: 0 0 auto;
+}
+
+.card-player-name {
+  font-size: 17px;
+  font-weight: 800;
+  color: white;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+  line-height: 1.3;
+  margin-bottom: var(--space-2);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  max-height: 2.6em;
+}
+
+.card-team-badge {
+  display: inline-block;
+  background: var(--glass-bg-light);
+  backdrop-filter: blur(var(--blur-md));
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: var(--radius-md);
+  padding: 4px 12px;
+  font-size: 12px;
+  font-weight: 700;
+  color: white;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+/* ========================================
+   TOP 6 ATTRIBUTES
+   ======================================== */
+
+.card-attributes {
+  position: relative;
+  z-index: 5;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-3);
+  flex: 0 0 auto;
+  margin-top: auto;
+}
+
+.card-attribute {
+  background: var(--glass-bg-light);
+  backdrop-filter: blur(var(--blur-md));
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-lg);
+  padding: var(--space-3);
+  text-align: center;
+  transition: all var(--transition-base);
+  min-height: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.player-card-simple:hover .card-attribute {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.card-attr-value {
+  display: block;
+  font-size: 22px;
+  font-weight: 800;
+  color: white;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.card-attr-label {
+  display: block;
+  font-size: 10px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.8);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ========================================
+   RARITY VARIATIONS
+   ======================================== */
+
+/* Bronze */
+.player-card-simple.bronze {
+  box-shadow: 0 10px 40px rgba(139, 69, 19, 0.6), var(--glass-shadow);
+}
+
+/* Silver */
+.player-card-simple.silver {
+  box-shadow: 0 10px 40px rgba(192, 192, 192, 0.6), var(--glass-shadow);
+}
+
+/* Silver Rare */
+.player-card-simple.silver_rare {
+  box-shadow: 0 10px 40px rgba(232, 232, 232, 0.7), var(--glass-shadow);
+}
+
+/* Gold */
+.player-card-simple.gold {
+  box-shadow: 0 10px 40px rgba(255, 215, 0, 0.7), var(--glass-shadow);
+}
+
+/* Gold Rare */
+.player-card-simple.gold_rare {
+  box-shadow: 0 10px 40px rgba(255, 140, 0, 0.8), var(--glass-shadow);
+}
+
+/* Legendary */
+.player-card-simple.legendary {
+  box-shadow: 0 10px 40px rgba(233, 30, 99, 0.8), 0 0 60px rgba(156, 39, 176, 0.6), var(--glass-shadow);
+  animation: legendary-glow 3s ease-in-out infinite;
+}
+
+@keyframes legendary-glow {
+  0%, 100% {
+    box-shadow: 0 10px 40px rgba(233, 30, 99, 0.8), 0 0 60px rgba(156, 39, 176, 0.6), var(--glass-shadow);
+  }
+  50% {
+    box-shadow: 0 10px 50px rgba(233, 30, 99, 1), 0 0 80px rgba(156, 39, 176, 0.8), var(--glass-shadow);
+  }
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+
+@media (max-width: 768px) {
+  .player-card-simple {
+    width: 240px;
+    height: 360px;
+  }
+
+  .card-photo-section {
+    height: 130px;
+  }
+
+  .card-player-photo {
+    max-height: 130px;
+  }
+
+  .card-player-name {
+    font-size: 15px;
+  }
+
+  .rating-value {
+    font-size: 24px;
+  }
+
+  .card-attr-value {
+    font-size: 18px;
+  }
+
+  .card-attribute {
+    padding: var(--space-2);
+    min-height: 50px;
+  }
+}

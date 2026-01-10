@@ -14,6 +14,8 @@ import software.amazon.awssdk.services.s3.model.GetObjectResponse;
 
 import jakarta.annotation.PostConstruct;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -67,10 +69,11 @@ public class AdvancedCardCache {
 
             ResponseInputStream<GetObjectResponse> response = r2Client.getObject(request);
 
-            // Parse JSON - format can be either:
+            // Parse JSON with UTF-8 encoding - format can be either:
             // 1. {"cards": [array of cards]} - new format
             // 2. {playerId: card, ...} - old format (map)
-            com.fasterxml.jackson.databind.JsonNode rootNode = objectMapper.readTree(response);
+            InputStreamReader reader = new InputStreamReader(response, StandardCharsets.UTF_8);
+            com.fasterxml.jackson.databind.JsonNode rootNode = objectMapper.readTree(reader);
 
             Map<String, PlayerCard> cardsMap = new HashMap<>();
 
